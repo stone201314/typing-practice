@@ -6,6 +6,9 @@ on:
       - 'v*'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -33,7 +36,6 @@ jobs:
       with:
         files: |
           bin/Release/net8.0-windows/win-x64/publish/TypingPractice.exe
-          bin/Release/net8.0-windows/win-x64/publish/**
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
