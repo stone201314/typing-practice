@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 
 namespace TypingPractice
 {
@@ -10,6 +11,7 @@ namespace TypingPractice
         private int _currentIndex = 0;
         private int _correctCount = 0;
         private string _currentInput = "";
+        private bool _showingResult = false;
         
         public PracticeWindow()
         {
@@ -31,6 +33,7 @@ namespace TypingPractice
             };
             
             ShowCurrentWord();
+            this.Focus();
         }
         
         private void ShowCurrentWord()
@@ -38,24 +41,43 @@ namespace TypingPractice
             if (_currentIndex >= _words.Count)
             {
                 // 练习完成
-                ResultText.Text = $"练习完成！\n正确率：{_correctCount}/{_words.Count}";
-                WordText.Text = "";
-                InputText.Text = "";
+                WordText.Text = "🎉 练习完成！";
+                WordText.FontSize = 36;
                 MeaningText.Text = "";
+                InputBox.Text = "";
+                HintText.Text = $"正确率：{_correctCount}/{_words.Count}";
+                ResultText.Text = "点击「返回」退出";
+                ResultText.Foreground = Brushes.Green;
                 return;
             }
             
             var word = _words[_currentIndex];
             WordText.Text = word.Display;
-            MeaningText.Text = word.Meaning;
-            ProgressText.Text = $"{_currentIndex + 1}/{_words.Count}";
-            InputText.Text = "";
+            WordText.FontSize = 56;
+            MeaningText.Text = $"含义：{word.Meaning}";
+            if (!string.IsNullOrEmpty(word.Pinyin))
+            {
+                MeaningText.Text += $"  拼音：{word.Pinyin}";
+            }
+            ProgressText.Text = $"进度：{_currentIndex + 1}/{_words.Count}";
+            InputBox.Text = "";
+            HintText.Text = "请输入对应的字母，按 Enter 确认";
+            ResultText.Text = "";
             _currentInput = "";
+            _showingResult = false;
         }
         
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (_currentIndex >= _words.Count) return;
+            
+            if (_showingResult)
+            {
+                // 正在显示结果，按任意键继续下一个
+                _currentIndex++;
+                ShowCurrentWord();
+                return;
+            }
             
             var word = _words[_currentIndex];
             
@@ -63,23 +85,44 @@ namespace TypingPractice
             if (e.Key == System.Windows.Input.Key.Enter)
             {
                 // 检查答案
-                if (_currentInput.ToLower() == word.Word.ToLower())
+                if (string.IsNullOrEmpty(_currentInput))
+                {
+                    // 没有输入，提示
+                    ResultText.Text = "❌ 请先输入！";
+                    ResultText.Foreground = Brushes.Red;
+                    return;
+                }
+                
+                bool isCorrect = _currentInput.ToLower() == word.Word.ToLower();
+                
+                if (isCorrect)
                 {
                     _correctCount++;
+                    ResultText.Text = "✅ 正确！按任意键继续";
+                    ResultText.Foreground = Brushes.Green;
                 }
-                _currentIndex++;
-                ShowCurrentWord();
+                else
+                {
+                    ResultText.Text = $"❌ 错误！正确答案：{word.Word}，按任意键继续";
+                    ResultText.Foreground = Brushes.Red;
+                }
+                
+                _showingResult = true;
             }
             else if (e.Key == System.Windows.Input.Key.Back && _currentInput.Length > 0)
             {
                 _currentInput = _currentInput[..^1];
-                InputText.Text = _currentInput;
+                InputBox.Text = _currentInput;
+            }
+            else if (e.Key == System.Windows.Input.Key.Escape)
+            {
+                Close();
             }
             else if (e.Key >= System.Windows.Input.Key.A && e.Key <= System.Windows.Input.Key.Z)
             {
                 var c = (char)('a' + (e.Key - System.Windows.Input.Key.A));
                 _currentInput += c;
-                InputText.Text = _currentInput;
+                InputBox.Text = _currentInput;
             }
         }
         
