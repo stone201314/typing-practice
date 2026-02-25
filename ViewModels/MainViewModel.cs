@@ -99,6 +99,13 @@ namespace TypingPractice.ViewModels
             CurrentMode = mode;
         }
         
+        public void UpdateSettings(UserSettings settings)
+        {
+            _dbService.UpdateSettings(settings);
+            Settings = settings;
+            TodayGoal = settings.DailyGoal;
+        }
+        
         public void RefreshProgress()
         {
             if (CurrentUser == null) return;
