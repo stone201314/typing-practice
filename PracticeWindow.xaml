@@ -26,41 +26,52 @@
         <!-- 中间内容 -->
         <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!-- 汉字/单词显示 -->
-            <TextBlock x:Name="WordText" Text="一" FontSize="80" FontWeight="Bold" 
+            <TextBlock x:Name="WordText" Text="一" FontSize="64" FontWeight="Bold" 
                        HorizontalAlignment="Center" Margin="0,0,0,20"
-                       Foreground="#333"/>
+                       Foreground="#333" TextWrapping="Wrap" MaxWidth="500"
+                       TextAlignment="Center"/>
             
             <!-- 含义 -->
             <TextBlock x:Name="MeaningText" Text="含义：数字1" 
                        FontSize="20" HorizontalAlignment="Center" 
-                       Foreground="#666" Margin="0,0,0,50"/>
+                       Foreground="#666" Margin="0,0,0,40"
+                       TextWrapping="Wrap" MaxWidth="500" TextAlignment="Center"/>
             
             <!-- 输入框 -->
-            <TextBox x:Name="InputBox" Text="" FontSize="32" 
-                     Width="350" Height="70" Padding="15"
+            <TextBox x:Name="InputBox" Text="" FontSize="28" 
+                     Width="400" Height="60" Padding="10"
                      HorizontalAlignment="Center" 
                      HorizontalContentAlignment="Center"
                      VerticalContentAlignment="Center"
                      BorderBrush="#4CAF50" BorderThickness="3"
                      FontFamily="Consolas"
                      KeyDown="InputBox_KeyDown"
-                     MaxLength="20"/>
+                     MaxLength="50"/>
             
             <!-- 提示 -->
             <TextBlock x:Name="HintText" Text="输入后按 Enter 确认" 
                        FontSize="16" HorizontalAlignment="Center" 
-                       Foreground="#999" Margin="0,25,0,0"/>
+                       Foreground="#999" Margin="0,20,0,0"/>
         </StackPanel>
         
         <!-- 结果显示 -->
         <TextBlock x:Name="ResultText" Grid.Row="3" Text="" FontSize="22" 
                    HorizontalAlignment="Center" FontWeight="Bold"
-                   Margin="0,30,0,0" TextWrapping="Wrap"
-                   MaxWidth="500" Height="40"/>
+                   Margin="0,20,0,0" TextWrapping="Wrap"
+                   MaxWidth="500" Height="50" TextAlignment="Center"/>
         
         <!-- 底部按钮 -->
-        <Button Grid.Row="4" Content="返回主界面" Width="140" Height="45" 
-                FontSize="16" HorizontalAlignment="Left" 
-                Click="OnClose" Margin="0,30,0,0"/>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" 
+                    HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button x:Name="ContinueBtn" Content="继续练习" Width="120" Height="45" 
+                    FontSize="16" Margin="10,0" Click="OnContinue"
+                    Background="#4CAF50" Foreground="White" Visibility="Collapsed"/>
+            <Button x:Name="BackBtn" Content="返回主界面" Width="120" Height="45" 
+                    FontSize="16" Margin="10,0" Click="OnClose"
+                    Background="#2196F3" Foreground="White" Visibility="Collapsed"/>
+            <Button x:Name="CloseBtn" Content="返回" Width="100" Height="40" 
+                    FontSize="15" HorizontalAlignment="Left" 
+                    Click="OnClose" Visibility="Visible"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -6,7 +6,8 @@ namespace TypingPractice
     public partial class MainWindow : Window
     {
         private string _mode = "pinyin";
-        private string _difficulty = "medium";
+        private string _difficulty = "easy";
+        private int _count = 10;
         
         public MainWindow()
         {
@@ -16,23 +17,24 @@ namespace TypingPractice
         private void OnPinyinMode(object sender, RoutedEventArgs e)
         {
             _mode = "pinyin";
-            var practiceWindow = new PracticeWindow(_mode, _difficulty);
-            practiceWindow.Owner = this;
-            practiceWindow.ShowDialog();
+            StartPractice();
         }
         
         private void OnEnglishMode(object sender, RoutedEventArgs e)
         {
             _mode = "english";
-            var practiceWindow = new PracticeWindow(_mode, _difficulty);
-            practiceWindow.Owner = this;
-            practiceWindow.ShowDialog();
+            StartPractice();
         }
         
         private void OnPoetryMode(object sender, RoutedEventArgs e)
         {
             _mode = "poetry";
-            var practiceWindow = new PracticeWindow(_mode, _difficulty);
+            StartPractice();
+        }
+        
+        private void StartPractice()
+        {
+            var practiceWindow = new PracticeWindow(_mode, _difficulty, _count);
             practiceWindow.Owner = this;
             practiceWindow.ShowDialog();
         }
@@ -55,31 +57,67 @@ namespace TypingPractice
             UpdateDifficultyButtons();
         }
         
+        private void OnCount5(object sender, RoutedEventArgs e)
+        {
+            _count = 5;
+            UpdateCountButtons();
+        }
+        
+        private void OnCount10(object sender, RoutedEventArgs e)
+        {
+            _count = 10;
+            UpdateCountButtons();
+        }
+        
+        private void OnCount20(object sender, RoutedEventArgs e)
+        {
+            _count = 20;
+            UpdateCountButtons();
+        }
+        
+        private void OnCount50(object sender, RoutedEventArgs e)
+        {
+            _count = 50;
+            UpdateCountButtons();
+        }
+        
         private void UpdateDifficultyButtons()
         {
-            EasyBtn.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(221, 221, 221));
-            EasyBtn.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Black);
-            MediumBtn.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(221, 221, 221));
-            MediumBtn.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Black);
-            HardBtn.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb(221, 221, 221));
-            HardBtn.Foreground = new SolidColorBrush(System.Windows.Media.Colors.Black);
-            
+            var gray = new SolidColorBrush(System.Windows.Media.Color.FromRgb(221, 221, 221));
             var green = new SolidColorBrush(System.Windows.Media.Color.FromRgb(76, 175, 80));
+            var white = new SolidColorBrush(System.Windows.Media.Colors.White);
+            var black = new SolidColorBrush(System.Windows.Media.Colors.Black);
             
-            if (_difficulty == "easy")
+            EasyBtn.Background = gray; EasyBtn.Foreground = black;
+            MediumBtn.Background = gray; MediumBtn.Foreground = black;
+            HardBtn.Background = gray; HardBtn.Foreground = black;
+            
+            switch (_difficulty)
             {
-                EasyBtn.Background = green;
-                EasyBtn.Foreground = new SolidColorBrush(System.Windows.Media.Colors.White);
+                case "easy": EasyBtn.Background = green; EasyBtn.Foreground = white; break;
+                case "medium": MediumBtn.Background = green; MediumBtn.Foreground = white; break;
+                case "hard": HardBtn.Background = green; HardBtn.Foreground = white; break;
             }
-            else if (_difficulty == "medium")
+        }
+        
+        private void UpdateCountButtons()
+        {
+            var gray = new SolidColorBrush(System.Windows.Media.Color.FromRgb(221, 221, 221));
+            var green = new SolidColorBrush(System.Windows.Media.Color.FromRgb(76, 175, 80));
+            var white = new SolidColorBrush(System.Windows.Media.Colors.White);
+            var black = new SolidColorBrush(System.Windows.Media.Colors.Black);
+            
+            Count5Btn.Background = gray; Count5Btn.Foreground = black;
+            Count10Btn.Background = gray; Count10Btn.Foreground = black;
+            Count20Btn.Background = gray; Count20Btn.Foreground = black;
+            Count50Btn.Background = gray; Count50Btn.Foreground = black;
+            
+            switch (_count)
             {
-                MediumBtn.Background = green;
-                MediumBtn.Foreground = new SolidColorBrush(System.Windows.Media.Colors.White);
-            }
-            else
-            {
-                HardBtn.Background = green;
-                HardBtn.Foreground = new SolidColorBrush(System.Windows.Media.Colors.White);
+                case 5: Count5Btn.Background = green; Count5Btn.Foreground = white; break;
+                case 10: Count10Btn.Background = green; Count10Btn.Foreground = white; break;
+                case 20: Count20Btn.Background = green; Count20Btn.Foreground = white; break;
+                case 50: Count50Btn.Background = green; Count50Btn.Foreground = white; break;
             }
         }
     }
