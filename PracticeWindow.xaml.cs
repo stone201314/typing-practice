@@ -746,7 +746,9 @@ namespace TypingPractice
                     return;
                 }
                 
-                bool isCorrect = input == correct;
+                bool isCorrect = _mode.StartsWith("english") 
+                    ? input.ToLower() == correct.ToLower() 
+                    : input == correct;
                 
                 if (isCorrect)
                 {
