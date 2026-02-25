@@ -81,11 +81,6 @@ namespace TypingPractice.ViewModels
         private void OnKeyPress(char key, bool isCorrect)
         {
             CurrentInput = _engine.CurrentInput;
-            
-            if (!isCorrect && _user != null)
-            {
-                // 可以在这里添加错误音效
-            }
         }
         
         private void OnWordComplete()

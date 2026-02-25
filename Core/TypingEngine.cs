@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using TypingPractice.Models;
 
 namespace TypingPractice.Core
 {
@@ -91,6 +92,4 @@ namespace TypingPractice.Core
             _stopwatch.Reset();
         }
     }
-    
-    // TypingResult moved to Models.cs
 }
