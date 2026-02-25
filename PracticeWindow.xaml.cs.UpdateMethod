@@ -1,0 +1,38 @@
+        private void ShowCurrentWord()
+        {
+            if (_currentIndex >= _words.Count)
+            {
+                // 练习完成
+                WordText.Text = "🎉";
+                WordText.FontSize = 72;
+                MeaningText.Text = $"正确率：{_correctCount}/{_words.Count}";
+                InputBox.Visibility = Visibility.Collapsed;
+                HintText.Visibility = Visibility.Collapsed;
+                ResultText.Text = "练习完成！";
+                ResultText.Foreground = Brushes.Green;
+                
+                ContinueBtn.Visibility = Visibility.Visible;
+                BackBtn.Visibility = Visibility.Visible;
+                CloseBtn.Visibility = Visibility.Collapsed;
+                return;
+            }
+            
+            var word = _words[_currentIndex];
+            
+            // 中文练习：显示含义（大字），用户输入汉字
+            // 英文练习：显示中文（大字），用户输入英文
+            WordText.Text = word.Display;  // 显示含义/中文
+            WordText.FontSize = _difficulty == "hard" ? 32 : 44;
+            MeaningText.Visibility = Visibility.Collapsed;  // 不显示分类
+            
+            ProgressText.Text = $"进度：{_currentIndex + 1}/{_words.Count}";
+            InputBox.Text = "";
+            InputBox.IsEnabled = true;
+            InputBox.Visibility = Visibility.Visible;
+            HintText.Visibility = Visibility.Visible;
+            HintText.Text = "输入后按 Enter 确认";
+            ResultText.Text = "";
+            _showingResult = false;
+            
+            InputBox.Focus();
+        }

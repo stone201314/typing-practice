@@ -704,20 +704,11 @@ namespace TypingPractice
             
             var word = _words[_currentIndex];
             
-            // 中文练习显示含义，英文练习显示中文
-            WordText.Text = word.Meaning;
-            WordText.FontSize = _difficulty == "hard" ? 28 : 36;
-            
-            MeaningText.Text = word.Display;  // 显示答案提示（用于确认）
-            if (_mode.StartsWith("chinese"))
-            {
-                // 中文练习不显示答案提示
-                MeaningText.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                MeaningText.Visibility = Visibility.Visible;
-            }
+            // 中文练习：显示含义（大字），用户输入汉字
+            // 英文练习：显示中文（大字），用户输入英文
+            WordText.Text = word.Display;
+            WordText.FontSize = _difficulty == "hard" ? 32 : 44;
+            MeaningText.Visibility = Visibility.Collapsed;
             
             ProgressText.Text = $"进度：{_currentIndex + 1}/{_words.Count}";
             InputBox.Text = "";
