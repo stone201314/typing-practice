@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Timers;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,7 +17,7 @@ namespace TypingPractice.ViewModels
         private readonly User _user;
         private readonly string _mode;
         private readonly List<VocabularyItem> _words;
-        private readonly Timer _timer;
+        private readonly System.Timers.Timer _timer;
         
         private int _currentIndex;
         private int _correctCount;
@@ -72,7 +71,7 @@ namespace TypingPractice.ViewModels
             _words = _vocabService.GetRandomWords(mode, grade, wordCount);
             _totalCount = _words.Count;
             
-            _timer = new Timer(100);
+            _timer = new System.Timers.Timer(100);
             _timer.Elapsed += Timer_Elapsed;
             
             StartNextWord();
@@ -98,7 +97,7 @@ namespace TypingPractice.ViewModels
             UpdateStats();
         }
         
-        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
+        private void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
