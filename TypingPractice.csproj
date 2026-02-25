@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Data\Vocabulary\**\*.json">
+    <Content Include="Data\Vocabulary\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
 </Project>

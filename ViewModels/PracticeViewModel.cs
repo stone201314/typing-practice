@@ -71,9 +71,19 @@ namespace TypingPractice.ViewModels
             _words = _vocabService.GetRandomWords(mode, grade, wordCount);
             _totalCount = _words.Count;
             
+            // 检查词库是否为空
+            if (_totalCount == 0)
+            {
+                ProgressText = "词库为空";
+                SpeedText = "请检查词库文件";
+                AccuracyText = "年级: " + grade;
+                return;
+            }
+            
             _timer = new System.Timers.Timer(100);
             _timer.Elapsed += Timer_Elapsed;
             
+            ProgressText = $"0/{_totalCount}";
             StartNextWord();
         }
         
@@ -87,10 +97,10 @@ namespace TypingPractice.ViewModels
             _correctCount++;
             _timer.Stop();
             
-            if (_currentWord != null)
+            if (CurrentWord != null)
             {
-                DefinitionText = $"{_currentWord.Display} {_currentWord.Pinyin}\n释义：{_currentWord.Definition}";
-                ExampleText = $"例句：{_currentWord.Example}";
+                DefinitionText = $"{CurrentWord.Display} {CurrentWord.Pinyin}\n释义：{CurrentWord.Definition}";
+                ExampleText = $"例句：{CurrentWord.Example}";
                 IsDefinitionVisible = true;
             }
             
@@ -109,6 +119,7 @@ namespace TypingPractice.ViewModels
         {
             if (IsDefinitionVisible) return;
             if (string.IsNullOrEmpty(TargetWord)) return;
+            if (_words.Count == 0) return;
             
             _engine.HandleKeyPress(key);
         }
@@ -133,9 +144,9 @@ namespace TypingPractice.ViewModels
         [RelayCommand]
         private void AddToVocabularyBook()
         {
-            if (_currentWord != null && _user != null)
+            if (CurrentWord != null && _user != null)
             {
-                _dbService.AddToVocabularyBook(_user.Id, _currentWord.Word, _mode);
+                _dbService.AddToVocabularyBook(_user.Id, CurrentWord.Word, _mode);
                 MessageBox.Show("已添加到生词本");
             }
         }
@@ -148,9 +159,9 @@ namespace TypingPractice.ViewModels
                 return;
             }
             
-            _currentWord = _words[_currentIndex];
-            TargetWord = _currentWord.Word;
-            DisplayWord = _mode == "pinyin" ? _currentWord.Display : _currentWord.Word;
+            CurrentWord = _words[_currentIndex];
+            TargetWord = CurrentWord.Word;
+            DisplayWord = _mode == "pinyin" ? CurrentWord.Display : CurrentWord.Word;
             CurrentInput = string.Empty;
             
             _engine.StartWord(TargetWord);
