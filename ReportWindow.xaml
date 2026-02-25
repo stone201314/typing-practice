@@ -16,9 +16,9 @@
         <TextBlock Grid.Row="0" Text="学习报告" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
         
         <!-- 统计卡片 -->
-        <StackPanel Grid.Row="1" Spacing="15">
+        <StackPanel Grid.Row="1">
             <!-- 今日 -->
-            <Border Background="White" CornerRadius="10" Padding="20">
+            <Border Background="White" CornerRadius="10" Padding="20" Margin="0,0,0,15">
                 <StackPanel>
                     <TextBlock Text="今日" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
                     <Grid>
@@ -47,7 +47,7 @@
             </Border>
             
             <!-- 本周 -->
-            <Border Background="White" CornerRadius="10" Padding="20">
+            <Border Background="White" CornerRadius="10" Padding="20" Margin="0,0,0,15">
                 <StackPanel>
                     <TextBlock Text="本周" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
                     <Grid>
