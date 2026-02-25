@@ -1,0 +1,352 @@
+[
+  {
+    "word": "hello",
+    "definition": "你好",
+    "example": "Hello, my name is Tom.",
+    "difficulty": 1,
+    "category": "问候"
+  },
+  {
+    "word": "hi",
+    "definition": "嗨，你好",
+    "example": "Hi! How are you?",
+    "difficulty": 1,
+    "category": "问候"
+  },
+  {
+    "word": "goodbye",
+    "definition": "再见",
+    "example": "Goodbye! See you tomorrow.",
+    "difficulty": 1,
+    "category": "问候"
+  },
+  {
+    "word": "bye",
+    "definition": "再见",
+    "example": "Bye! Have a nice day.",
+    "difficulty": 1,
+    "category": "问候"
+  },
+  {
+    "word": "good",
+    "definition": "好的",
+    "example": "This is a good book.",
+    "difficulty": 1,
+    "category": "形容"
+  },
+  {
+    "word": "morning",
+    "definition": "早晨",
+    "example": "Good morning!",
+    "difficulty": 1,
+    "category": "时间"
+  },
+  {
+    "word": "afternoon",
+    "definition": "下午",
+    "example": "Good afternoon!",
+    "difficulty": 1,
+    "category": "时间"
+  },
+  {
+    "word": "evening",
+    "definition": "傍晚",
+    "example": "Good evening!",
+    "difficulty": 1,
+    "category": "时间"
+  },
+  {
+    "word": "night",
+    "definition": "夜晚",
+    "example": "Good night!",
+    "difficulty": 1,
+    "category": "时间"
+  },
+  {
+    "word": "one",
+    "definition": "一",
+    "example": "I have one apple.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "two",
+    "definition": "二",
+    "example": "I have two hands.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "three",
+    "definition": "三",
+    "example": "There are three cats.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "four",
+    "definition": "四",
+    "example": "I have four pencils.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "five",
+    "definition": "五",
+    "example": "I have five fingers.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "six",
+    "definition": "六",
+    "example": "There are six birds.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "seven",
+    "definition": "七",
+    "example": "Today is Monday, the seventh day.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "eight",
+    "definition": "八",
+    "example": "I am eight years old.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "nine",
+    "definition": "九",
+    "example": "There are nine students.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "ten",
+    "definition": "十",
+    "example": "I have ten books.",
+    "difficulty": 1,
+    "category": "数字"
+  },
+  {
+    "word": "red",
+    "definition": "红色",
+    "example": "The apple is red.",
+    "difficulty": 1,
+    "category": "颜色"
+  },
+  {
+    "word": "blue",
+    "definition": "蓝色",
+    "example": "The sky is blue.",
+    "difficulty": 1,
+    "category": "颜色"
+  },
+  {
+    "word": "green",
+    "definition": "绿色",
+    "example": "The grass is green.",
+    "difficulty": 1,
+    "category": "颜色"
+  },
+  {
+    "word": "yellow",
+    "definition": "黄色",
+    "example": "The banana is yellow.",
+    "difficulty": 1,
+    "category": "颜色"
+  },
+  {
+    "word": "black",
+    "definition": "黑色",
+    "example": "My hair is black.",
+    "difficulty": 1,
+    "category": "颜色"
+  },
+  {
+    "word": "white",
+    "definition": "白色",
+    "example": "The snow is white.",
+    "difficulty": 1,
+    "category": "颜色"
+  },
+  {
+    "word": "cat",
+    "definition": "猫",
+    "example": "I have a cat.",
+    "difficulty": 1,
+    "category": "动物"
+  },
+  {
+    "word": "dog",
+    "definition": "狗",
+    "example": "The dog is running.",
+    "difficulty": 1,
+    "category": "动物"
+  },
+  {
+    "word": "bird",
+    "definition": "鸟",
+    "example": "The bird can fly.",
+    "difficulty": 1,
+    "category": "动物"
+  },
+  {
+    "word": "fish",
+    "definition": "鱼",
+    "example": "The fish is swimming.",
+    "difficulty": 1,
+    "category": "动物"
+  },
+  {
+    "word": "apple",
+    "definition": "苹果",
+    "example": "I eat an apple every day.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "banana",
+    "definition": "香蕉",
+    "example": "I like bananas.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "orange",
+    "definition": "橙子",
+    "example": "The orange is sweet.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "water",
+    "definition": "水",
+    "example": "I drink water.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "milk",
+    "definition": "牛奶",
+    "example": "I drink milk for breakfast.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "bread",
+    "definition": "面包",
+    "example": "I eat bread for breakfast.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "egg",
+    "definition": "鸡蛋",
+    "example": "I have an egg for breakfast.",
+    "difficulty": 1,
+    "category": "食物"
+  },
+  {
+    "word": "book",
+    "definition": "书",
+    "example": "I read a book.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "pen",
+    "definition": "钢笔",
+    "example": "I write with a pen.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "pencil",
+    "definition": "铅笔",
+    "example": "I draw with a pencil.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "bag",
+    "definition": "书包",
+    "example": "My bag is blue.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "desk",
+    "definition": "书桌",
+    "example": "My book is on the desk.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "chair",
+    "definition": "椅子",
+    "example": "Please sit on the chair.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "door",
+    "definition": "门",
+    "example": "Open the door, please.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "window",
+    "definition": "窗户",
+    "example": "Please close the window.",
+    "difficulty": 1,
+    "category": "物品"
+  },
+  {
+    "word": "boy",
+    "definition": "男孩",
+    "example": "He is a boy.",
+    "difficulty": 1,
+    "category": "人物"
+  },
+  {
+    "word": "girl",
+    "definition": "女孩",
+    "example": "She is a girl.",
+    "difficulty": 1,
+    "category": "人物"
+  },
+  {
+    "word": "man",
+    "definition": "男人",
+    "example": "He is a man.",
+    "difficulty": 1,
+    "category": "人物"
+  },
+  {
+    "word": "woman",
+    "definition": "女人",
+    "example": "She is a woman.",
+    "difficulty": 1,
+    "category": "人物"
+  },
+  {
+    "word": "mother",
+    "definition": "妈妈",
+    "example": "My mother is a teacher.",
+    "difficulty": 1,
+    "category": "人物"
+  },
+  {
+    "word": "father",
+    "definition": "爸爸",
+    "example": "My father is a doctor.",
+    "difficulty": 1,
+    "category": "人物"
+  }
+]
