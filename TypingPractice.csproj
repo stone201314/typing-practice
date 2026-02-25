@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\Vocabulary\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Data\Vocabulary\**\*.json">
+      <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

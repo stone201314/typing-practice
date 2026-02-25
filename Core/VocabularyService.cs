@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 using TypingPractice.Models;
 
@@ -9,13 +10,8 @@ namespace TypingPractice.Core
 {
     public class VocabularyService
     {
-        private readonly string _vocabularyPath;
-        private Dictionary<string, List<VocabularyItem>> _cache = new();
-        
-        public VocabularyService(string basePath)
-        {
-            _vocabularyPath = Path.Combine(basePath, "Data", "Vocabulary");
-        }
+        private readonly Dictionary<string, List<VocabularyItem>> _cache = new();
+        private readonly Assembly _assembly = Assembly.GetExecutingAssembly();
         
         public List<VocabularyItem> GetVocabulary(string mode, int grade)
         {
@@ -27,20 +23,22 @@ namespace TypingPractice.Core
             }
             
             var folder = mode.ToLower() == "pinyin" ? "pinyin" : "english";
-            var filePath = Path.Combine(_vocabularyPath, folder, $"grade_{grade}.json");
-            
-            if (!File.Exists(filePath))
-            {
-                System.Diagnostics.Debug.WriteLine($"词库文件不存在: {filePath}");
-                return new List<VocabularyItem>();
-            }
+            var resourceName = $"{folder}grade_{grade}.json";
             
             try
             {
-                var json = File.ReadAllText(filePath);
+                // 从嵌入式资源加载
+                var json = LoadFromResource(resourceName);
+                
+                if (string.IsNullOrEmpty(json))
+                {
+                    System.Diagnostics.Debug.WriteLine($"词库资源不存在: {resourceName}");
+                    return new List<VocabularyItem>();
+                }
+                
                 var items = JsonConvert.DeserializeObject<List<VocabularyItem>>(json) ?? new List<VocabularyItem>();
                 _cache[cacheKey] = items;
-                System.Diagnostics.Debug.WriteLine($"加载词库成功: {filePath}, 共 {items.Count} 词");
+                System.Diagnostics.Debug.WriteLine($"加载词库成功: {resourceName}, 共 {items.Count} 词");
                 return items;
             }
             catch (Exception ex)
@@ -48,6 +46,28 @@ namespace TypingPractice.Core
                 System.Diagnostics.Debug.WriteLine($"加载词汇失败: {ex.Message}");
                 return new List<VocabularyItem>();
             }
+        }
+        
+        private string LoadFromResource(string resourceName)
+        {
+            // 获取所有资源名称
+            var resourceNames = _assembly.GetManifestResourceNames();
+            
+            // 查找匹配的资源
+            var fullResourceName = resourceNames.FirstOrDefault(n => n.EndsWith(resourceName, StringComparison.OrdinalIgnoreCase));
+            
+            if (fullResourceName == null)
+            {
+                System.Diagnostics.Debug.WriteLine($"找不到资源: {resourceName}");
+                System.Diagnostics.Debug.WriteLine($"可用资源: {string.Join(", ", resourceNames)}");
+                return null;
+            }
+            
+            using var stream = _assembly.GetManifestResourceStream(fullResourceName);
+            if (stream == null) return null;
+            
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
         
         public List<VocabularyItem> GetRandomWords(string mode, int grade, int count)

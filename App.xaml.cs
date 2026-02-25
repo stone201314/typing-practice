@@ -16,7 +16,7 @@ namespace TypingPractice
             {
                 // 初始化服务
                 var dbService = new DatabaseService(BasePath);
-                var vocabService = new VocabularyService(BasePath);
+                var vocabService = new VocabularyService();
                 var statsService = new StatisticsService();
                 
                 // 创建主 ViewModel
