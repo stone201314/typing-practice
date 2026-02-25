@@ -11,7 +11,9 @@ namespace TypingPractice
         
         private void OnStartPractice(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("开始练习功能开发中...\n\n请等待下一版本！", "提示");
+            var practiceWindow = new PracticeWindow();
+            practiceWindow.Owner = this;
+            practiceWindow.ShowDialog();
         }
     }
 }
