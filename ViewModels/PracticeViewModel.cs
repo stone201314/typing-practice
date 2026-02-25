@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -11,13 +10,13 @@ namespace TypingPractice.ViewModels
 {
     public partial class PracticeViewModel : ObservableObject
     {
-        private readonly TypingEngine _engine;
+        private readonly TypingEngine _engine = new();
         private readonly VocabularyService _vocabService;
         private readonly DatabaseService _dbService;
         private readonly User _user;
         private readonly string _mode;
         private readonly List<VocabularyItem> _words;
-        private readonly System.Timers.Timer _timer;
+        private System.Timers.Timer? _timer;
         
         private int _currentIndex;
         private int _correctCount;
@@ -64,7 +63,6 @@ namespace TypingPractice.ViewModels
             _vocabService = vocabService;
             _dbService = dbService;
             
-            _engine = new TypingEngine();
             _engine.OnKeyPress += OnKeyPress;
             _engine.OnWordComplete += OnWordComplete;
             
@@ -75,8 +73,8 @@ namespace TypingPractice.ViewModels
             if (_totalCount == 0)
             {
                 ProgressText = "词库为空";
-                SpeedText = "请检查词库文件";
-                AccuracyText = "年级: " + grade;
+                SpeedText = "请检查词库";
+                AccuracyText = $"年级: {grade}";
                 return;
             }
             
@@ -95,7 +93,7 @@ namespace TypingPractice.ViewModels
         private void OnWordComplete()
         {
             _correctCount++;
-            _timer.Stop();
+            _timer?.Stop();
             
             if (CurrentWord != null)
             {
@@ -109,10 +107,11 @@ namespace TypingPractice.ViewModels
         
         private void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            try
             {
-                UpdateStats();
-            });
+                Application.Current?.Dispatcher?.Invoke(() => UpdateStats());
+            }
+            catch { }
         }
         
         public void HandleKey(char key)
@@ -166,7 +165,7 @@ namespace TypingPractice.ViewModels
             
             _engine.StartWord(TargetWord);
             _startTime = DateTime.Now;
-            _timer.Start();
+            _timer?.Start();
         }
         
         private void UpdateStats()
@@ -188,9 +187,8 @@ namespace TypingPractice.ViewModels
         
         private void Complete()
         {
-            _timer.Stop();
+            _timer?.Stop();
             
-            // 保存练习记录
             var elapsed = DateTime.Now - _startTime;
             var record = new PracticeRecord
             {
@@ -205,7 +203,6 @@ namespace TypingPractice.ViewModels
             };
             
             _dbService.SavePracticeRecord(record);
-            
             PracticeCompleted?.Invoke();
             
             MessageBox.Show($"练习完成！\n正确率：{record.Accuracy:F0}%\n速度：{record.Speed:F0} 字/分");
@@ -213,8 +210,8 @@ namespace TypingPractice.ViewModels
         
         public void Cleanup()
         {
-            _timer.Stop();
-            _timer.Dispose();
+            _timer?.Stop();
+            _timer?.Dispose();
         }
     }
 }
