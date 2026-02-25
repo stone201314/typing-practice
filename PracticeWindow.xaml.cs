@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace TypingPractice
@@ -10,30 +11,28 @@ namespace TypingPractice
         private readonly List<WordItem> _words;
         private int _currentIndex = 0;
         private int _correctCount = 0;
-        private string _currentInput = "";
         private bool _showingResult = false;
         
         public PracticeWindow()
         {
             InitializeComponent();
             
-            // 内置词库
+            // 内置词库 - 只显示汉字，不显示拼音
             _words = new List<WordItem>
             {
-                new() { Word = "yi", Display = "一", Pinyin = "yī", Meaning = "数字1" },
-                new() { Word = "er", Display = "二", Pinyin = "èr", Meaning = "数字2" },
-                new() { Word = "san", Display = "三", Pinyin = "sān", Meaning = "数字3" },
-                new() { Word = "si", Display = "四", Pinyin = "sì", Meaning = "数字4" },
-                new() { Word = "wu", Display = "五", Pinyin = "wǔ", Meaning = "数字5" },
-                new() { Word = "apple", Display = "apple", Pinyin = "", Meaning = "苹果" },
-                new() { Word = "book", Display = "book", Pinyin = "", Meaning = "书" },
-                new() { Word = "cat", Display = "cat", Pinyin = "", Meaning = "猫" },
-                new() { Word = "dog", Display = "dog", Pinyin = "", Meaning = "狗" },
-                new() { Word = "fish", Display = "fish", Pinyin = "", Meaning = "鱼" },
+                new() { Word = "yi", Display = "一", Meaning = "数字1" },
+                new() { Word = "er", Display = "二", Meaning = "数字2" },
+                new() { Word = "san", Display = "三", Meaning = "数字3" },
+                new() { Word = "si", Display = "四", Meaning = "数字4" },
+                new() { Word = "wu", Display = "五", Meaning = "数字5" },
+                new() { Word = "liu", Display = "六", Meaning = "数字6" },
+                new() { Word = "qi", Display = "七", Meaning = "数字7" },
+                new() { Word = "ba", Display = "八", Meaning = "数字8" },
+                new() { Word = "jiu", Display = "九", Meaning = "数字9" },
+                new() { Word = "shi", Display = "十", Meaning = "数字10" },
             };
             
             ShowCurrentWord();
-            this.Focus();
         }
         
         private void ShowCurrentWord()
@@ -41,10 +40,11 @@ namespace TypingPractice
             if (_currentIndex >= _words.Count)
             {
                 // 练习完成
-                WordText.Text = "🎉 练习完成！";
-                WordText.FontSize = 36;
-                MeaningText.Text = "";
+                WordText.Text = "🎉";
+                WordText.FontSize = 64;
+                MeaningText.Text = "练习完成！";
                 InputBox.Text = "";
+                InputBox.IsEnabled = false;
                 HintText.Text = $"正确率：{_correctCount}/{_words.Count}";
                 ResultText.Text = "点击「返回」退出";
                 ResultText.Foreground = Brushes.Green;
@@ -53,76 +53,64 @@ namespace TypingPractice
             
             var word = _words[_currentIndex];
             WordText.Text = word.Display;
-            WordText.FontSize = 56;
+            WordText.FontSize = 64;
             MeaningText.Text = $"含义：{word.Meaning}";
-            if (!string.IsNullOrEmpty(word.Pinyin))
-            {
-                MeaningText.Text += $"  拼音：{word.Pinyin}";
-            }
             ProgressText.Text = $"进度：{_currentIndex + 1}/{_words.Count}";
             InputBox.Text = "";
-            HintText.Text = "请输入对应的字母，按 Enter 确认";
+            InputBox.IsEnabled = true;
+            HintText.Text = "输入拼音后按 Enter 确认";
             ResultText.Text = "";
-            _currentInput = "";
             _showingResult = false;
+            
+            // 聚焦到输入框
+            InputBox.Focus();
         }
         
-        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void InputBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (_currentIndex >= _words.Count) return;
             
-            if (_showingResult)
+            if (e.Key == Key.Enter)
             {
-                // 正在显示结果，按任意键继续下一个
-                _currentIndex++;
-                ShowCurrentWord();
-                return;
-            }
-            
-            var word = _words[_currentIndex];
-            
-            // 处理按键
-            if (e.Key == System.Windows.Input.Key.Enter)
-            {
-                // 检查答案
-                if (string.IsNullOrEmpty(_currentInput))
+                if (_showingResult)
                 {
-                    // 没有输入，提示
-                    ResultText.Text = "❌ 请先输入！";
+                    // 正在显示结果，继续下一个
+                    _currentIndex++;
+                    ShowCurrentWord();
+                    return;
+                }
+                
+                var word = _words[_currentIndex];
+                var input = InputBox.Text.Trim().ToLower();
+                
+                if (string.IsNullOrEmpty(input))
+                {
+                    ResultText.Text = "❌ 请先输入拼音！";
                     ResultText.Foreground = Brushes.Red;
                     return;
                 }
                 
-                bool isCorrect = _currentInput.ToLower() == word.Word.ToLower();
+                // 检查答案
+                bool isCorrect = input == word.Word.ToLower();
                 
                 if (isCorrect)
                 {
                     _correctCount++;
-                    ResultText.Text = "✅ 正确！按任意键继续";
+                    ResultText.Text = "✅ 正确！按 Enter 继续";
                     ResultText.Foreground = Brushes.Green;
                 }
                 else
                 {
-                    ResultText.Text = $"❌ 错误！正确答案：{word.Word}，按任意键继续";
+                    ResultText.Text = $"❌ 错误！正确答案：{word.Word}，按 Enter 继续";
                     ResultText.Foreground = Brushes.Red;
                 }
                 
                 _showingResult = true;
+                e.Handled = true;
             }
-            else if (e.Key == System.Windows.Input.Key.Back && _currentInput.Length > 0)
-            {
-                _currentInput = _currentInput[..^1];
-                InputBox.Text = _currentInput;
-            }
-            else if (e.Key == System.Windows.Input.Key.Escape)
+            else if (e.Key == Key.Escape)
             {
                 Close();
-            }
-            else if (e.Key >= System.Windows.Input.Key.A && e.Key <= System.Windows.Input.Key.Z)
-            {
-                var c = (char)('a' + (e.Key - System.Windows.Input.Key.A));
-                _currentInput += c;
-                InputBox.Text = _currentInput;
             }
         }
         
@@ -134,9 +122,8 @@ namespace TypingPractice
     
     public class WordItem
     {
-        public string Word { get; set; } = "";
-        public string Display { get; set; } = "";
-        public string Pinyin { get; set; } = "";
-        public string Meaning { get; set; } = "";
+        public string Word { get; set; } = "";      // 正确的拼音
+        public string Display { get; set; } = "";   // 显示的汉字
+        public string Meaning { get; set; } = "";   // 含义
     }
 }

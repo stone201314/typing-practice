@@ -3,9 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="打字练习" Height="450" Width="550"
         WindowStartupLocation="CenterScreen"
-        Background="#f5f5f5"
-        KeyDown="Window_KeyDown"
-        Focusable="True">
+        Background="#f5f5f5">
     
     <Grid Margin="25">
         <Grid.RowDefinitions>
@@ -20,28 +18,27 @@
         
         <!-- 中间 -->
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="请输入这个字/词：" FontSize="16" Foreground="Gray" 
+            <TextBlock Text="请输入这个字对应的拼音：" FontSize="16" Foreground="Gray" 
                        HorizontalAlignment="Center" Margin="0,0,0,10"/>
             
-            <TextBlock x:Name="WordText" Text="一" FontSize="56" FontWeight="Bold" 
+            <TextBlock x:Name="WordText" Text="一" FontSize="64" FontWeight="Bold" 
                        HorizontalAlignment="Center" Margin="0,0,0,15"
                        Foreground="#333"/>
             
-            <TextBlock x:Name="MeaningText" Text="含义：数字1  拼音：yī" 
+            <TextBlock x:Name="MeaningText" Text="含义：数字1" 
                        FontSize="16" HorizontalAlignment="Center" 
                        Foreground="#666" Margin="0,0,0,30"/>
             
-            <!-- 输入框 -->
-            <Border Background="White" CornerRadius="10" Padding="15" 
-                    MinWidth="250" BorderBrush="#ddd" BorderThickness="2">
-                <TextBox x:Name="InputBox" Text="" FontSize="28" 
-                         HorizontalAlignment="Center" BorderThickness="0"
-                         IsReadOnly="True" CaretBrush="Transparent"
-                         Foreground="#333" Background="Transparent"
-                         TextAlignment="Center" MinWidth="200"/>
-            </Border>
+            <!-- 输入框 - 可以正常输入 -->
+            <TextBox x:Name="InputBox" Text="" FontSize="32" 
+                     Width="250" Height="50" Padding="10"
+                     HorizontalAlignment="Center" 
+                     HorizontalContentAlignment="Center"
+                     VerticalContentAlignment="Center"
+                     BorderBrush="#4CAF50" BorderThickness="2"
+                     KeyDown="InputBox_KeyDown"/>
             
-            <TextBlock x:Name="HintText" Text="请输入对应的字母，按 Enter 确认" 
+            <TextBlock x:Name="HintText" Text="输入拼音后按 Enter 确认" 
                        FontSize="13" HorizontalAlignment="Center" 
                        Foreground="#999" Margin="0,15,0,0"/>
             
